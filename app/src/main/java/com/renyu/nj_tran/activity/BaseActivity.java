@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.baidu.mobstat.StatService;
 import com.renyu.nj_tran.R;
 import com.renyu.nj_tran.common.ParamUtils;
 
@@ -59,12 +60,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
+        StatService.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         EventBus.getDefault().unregister(this);
+        StatService.onPause(this);
     }
 
     public void onEventMainThread(final String updateString) {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
+import com.baidu.mobstat.StatService;
 import com.renyu.nj_tran.R;
 
 import cn.jpush.android.api.JPushInterface;
@@ -33,6 +34,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        StatService.onResume(this);
     }
 
     @Override
@@ -43,5 +45,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        StatService.onPause(this);
     }
 }
