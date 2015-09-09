@@ -65,8 +65,6 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
         markers=new ArrayList<>();
 
         initView(savedInstanceState);
-
-        EventBus.getDefault().register(CurrentPositionMapActivity.this);
     }
 
     private void initView(Bundle savedInstanceState) {
@@ -94,8 +92,6 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
     protected void onDestroy() {
         super.onDestroy();
         station_mapview.onDestroy();
-
-        EventBus.getDefault().unregister(CurrentPositionMapActivity.this);
     }
 
     @Override
@@ -156,6 +152,10 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
                 }
                 aMap.addPolyline(options.color(Color.BLACK)).setGeodesic(true);
                 isDrawComp=true;
+                if (getIntent().getExtras().getParcelableArrayList("busLists")!=null) {
+                    ArrayList<CurrentPositionModel.BusesEntity> busLists=getIntent().getExtras().getParcelableArrayList("busLists");
+                    onEventMainThread(busLists);
+                }
             }
         }, 300);
     }

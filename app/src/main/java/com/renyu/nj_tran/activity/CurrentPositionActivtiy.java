@@ -45,6 +45,7 @@ public class CurrentPositionActivtiy extends BaseActivity {
     ArrayList<Object> models=null;
     ArrayList<StationModel> stationModels=null;
     ArrayList<Integer> hasPassArraylists=null;
+    ArrayList<CurrentPositionModel.BusesEntity> busLists=null;
 
     Handler handler=new Handler() {
         @Override
@@ -69,13 +70,13 @@ public class CurrentPositionActivtiy extends BaseActivity {
                 post(runnable);
             }
             else if (msg.what==2) {
-                ArrayList<CurrentPositionModel.BusesEntity> busesEntityList=msg.getData().getParcelableArrayList("value");
-                EventBus.getDefault().post(busesEntityList);
+                busLists=msg.getData().getParcelableArrayList("value");
+                EventBus.getDefault().post(busLists);
                 models.clear();
                 for (int i=0;i<stationModels.size();i++) {
-                    for (int j=0;j<busesEntityList.size();j++) {
-                        if (busesEntityList.get(j).getSt_level()==(i+1)) {
-                            models.add(busesEntityList.get(j));
+                    for (int j=0;j<busLists.size();j++) {
+                        if (busLists.get(j).getSt_level()==(i+1)) {
+                            models.add(busLists.get(j));
                         }
                     }
                     models.add(stationModels.get(i));
@@ -200,6 +201,9 @@ public class CurrentPositionActivtiy extends BaseActivity {
             Bundle bundle=new Bundle();
             bundle.putString("line_name", getIntent().getExtras().getString("line_name"));
             bundle.putParcelable("value", getIntent().getExtras().getParcelable("value"));
+            if (busLists!=null&&busLists.size()>0) {
+                bundle.putParcelableArrayList("busLists", busLists);
+            }
             intent.putExtras(bundle);
             startActivity(intent);
         }

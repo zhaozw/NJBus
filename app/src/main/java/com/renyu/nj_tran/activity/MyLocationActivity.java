@@ -169,8 +169,8 @@ public class MyLocationActivity extends BaseActivity implements AMapLocationList
                 public void run() {
                     Message m=new Message();
                     Bundle bundle=new Bundle();
-                    bundle.putParcelableArrayList("value", DBUtils.getNearByStation(MyLocationActivity.this, new LatLng(32.068574, 118.773129)));
-//                    bundle.putParcelableArrayList("value", DBUtils.getNearByStation(MyLocationActivity.this, new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
+//                    bundle.putParcelableArrayList("value", DBUtils.getNearByStation(MyLocationActivity.this, new LatLng(32.068574, 118.773129)));
+                    bundle.putParcelableArrayList("value", DBUtils.getNearByStation(MyLocationActivity.this, new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())));
                     m.setData(bundle);
                     handler.sendMessage(m);
                 }
@@ -232,7 +232,7 @@ public class MyLocationActivity extends BaseActivity implements AMapLocationList
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.action_mylocation) {
-            if (models!=null) {
+            if (models!=null&&models.size()>0&&c_latlng!=null) {
                 Intent intent=new Intent(MyLocationActivity.this, StationMapActivity.class);
                 Bundle bundle=new Bundle();
                 bundle.putDouble("lat", c_latlng.latitude);
