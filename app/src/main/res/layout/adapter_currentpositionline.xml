@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dip">
+    <View
+        android:id="@+id/cp_center_line"
+        android:background="@android:color/black"
+        android:layout_centerInParent="true"
+        android:layout_width="1dip"
+        android:layout_height="match_parent">
+
+    </View>
+    <View
+        android:id="@+id/cp_right_line"
+        android:visibility="invisible"
+        android:background="@android:color/black"
+        android:layout_toRightOf="@id/cp_center_line"
+        android:layout_centerInParent="true"
+        android:layout_width="30dip"
+        android:layout_height="1dip">
+
+    </View>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+        <View
+            android:background="@mipmap/icon_bus_2"
+            android:layout_marginLeft="25dip"
+            android:layout_width="36dip"
+            android:layout_height="20dip">
+
+        </View>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/adapter_currentposition_line"
+        android:layout_toRightOf="@id/cp_right_line"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dip"
+        android:layout_marginLeft="5dip"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

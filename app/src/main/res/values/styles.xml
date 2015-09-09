@@ -1,0 +1,44 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/bus_blue</item>
+        <item name="colorPrimaryDark">@color/bus_blue</item>
+        <!-- 箭头 -->
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+    </style>
+
+    <!-- 左边的箭头指示-->
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="splashStyle" parent="AppBaseTheme">
+        <item name="android:background">@mipmap/welcome_bg</item>
+    </style>
+
+    <style name="mdtp_ActionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/mdtp_material_button_height</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="mdtp_ActionButton.Text">
+        <item name="android:textSize">@dimen/mdtp_material_button_textsize</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/mdtp_material_button_background</item>
+        <item name="android:minWidth">@dimen/mdtp_material_button_minwidth</item>
+        <item name="android:paddingLeft">@dimen/mdtp_material_button_textpadding_horizontal</item>
+        <item name="android:paddingRight">@dimen/mdtp_material_button_textpadding_horizontal</item>
+        <item name="android:textColor">@color/mdtp_button_color</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+</resources>

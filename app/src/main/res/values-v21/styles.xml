@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="AppBaseTheme">
+
+    </style>
+
+    <!-- 启动页面样式 -->
+    <style name="splashStyle" parent="AppBaseTheme">
+        <item name="android:background">@mipmap/welcome_bg</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+</resources>

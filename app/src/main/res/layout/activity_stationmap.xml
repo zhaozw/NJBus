@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/view_toolbar">
+
+    </include>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.amap.api.maps2d.MapView
+            android:id="@+id/station_mapview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.amap.api.maps2d.MapView>
+    </RelativeLayout>
+</LinearLayout>

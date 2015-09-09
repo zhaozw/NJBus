@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bus_blue">#3190e8</color>
+    <color name="card_shadow">#10000000</color>
+    <color name="card_background">#ffffff</color>
+    <color name="mdtp_button_color">#009688</color>
+    <color name="mdtp_button_selected">#33969696</color>
+</resources>

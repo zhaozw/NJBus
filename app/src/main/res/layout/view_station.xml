@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/view_station_layout"
+    android:background="@mipmap/icon_station">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="南京南京"
+        android:paddingLeft="3dip"
+        android:paddingRight="3dip"
+        android:textColor="@android:color/white"
+        android:id="@+id/view_station_textview" />
+</RelativeLayout>
