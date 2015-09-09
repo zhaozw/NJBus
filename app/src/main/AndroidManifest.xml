@@ -44,7 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MyLocationActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.MyLocationActivity" android:screenOrientation="portrait" android:theme="@style/AppMainTheme"></activity>
         <activity android:name=".activity.CurrentPositionActivtiy" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.StationMapActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.CurrentPositionMapActivity" android:screenOrientation="portrait"></activity>

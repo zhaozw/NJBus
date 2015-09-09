@@ -7,6 +7,9 @@
         <item name="colorPrimaryDark">@color/bus_blue</item>
         <!-- 箭头 -->
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
     <!-- 左边的箭头指示-->
@@ -16,6 +19,10 @@
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="AppMainTheme" parent="AppBaseTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
 
     <style name="splashStyle" parent="AppBaseTheme">
         <item name="android:background">@mipmap/welcome_bg</item>

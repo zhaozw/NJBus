@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.baidu.mobstat.StatService;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.renyu.nj_tran.R;
 import com.renyu.nj_tran.common.ParamUtils;
 
@@ -38,6 +39,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         SQLiteDatabase.loadLibs(this);
 
+        SwipeBackHelper.onCreate(this);
+
+        SwipeBackHelper.getCurrentPage(this)
+                .setSwipeBackEnable(true)
+                .setSwipeEdgePercent(0.5f)
+                .setSwipeSensitivity(0.5f)
+                .setClosePercent(0.5f)
+                .setSwipeRelateEnable(true).setSwipeSensitivity(1);
+
         initViews();
     }
 
@@ -57,6 +67,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SwipeBackHelper.onPostCreate(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         EventBus.getDefault().register(this);
@@ -68,6 +84,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPause();
         EventBus.getDefault().unregister(this);
         StatService.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SwipeBackHelper.onDestroy(this);
     }
 
     public void onEventMainThread(final String updateString) {
