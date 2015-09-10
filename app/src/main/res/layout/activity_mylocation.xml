@@ -15,16 +15,27 @@
         android:textSize="15sp"
         android:background="#ebecee"
         android:textColor="@android:color/black"/>
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/mylocation_srl"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mylocation_rv"
+        <TextView
+            android:id="@+id/mylocation_nostation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:text="啊哦，您目前不在南京啊，请回到南京再试试吧"
+            android:gravity="center"/>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/mylocation_srl"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mylocation_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
 
 </LinearLayout>

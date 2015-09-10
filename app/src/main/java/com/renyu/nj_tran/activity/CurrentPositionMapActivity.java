@@ -15,6 +15,7 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.PolylineOptions;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.renyu.nj_tran.R;
 import com.renyu.nj_tran.common.DBUtils;
 import com.renyu.nj_tran.model.CurrentPositionModel;
@@ -24,7 +25,6 @@ import com.renyu.nj_tran.model.StationModel;
 import java.util.ArrayList;
 
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by renyu on 15/9/6.
@@ -59,6 +59,8 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
 
         LineModel model=getIntent().getExtras().getParcelable("value");
         stationModels= DBUtils.getLineInfo(model.getLine_id(), model.getUpdown_type(), CurrentPositionMapActivity.this);

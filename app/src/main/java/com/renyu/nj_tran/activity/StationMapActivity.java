@@ -16,6 +16,7 @@ import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.jude.swipbackhelper.SwipeBackHelper;
 import com.renyu.nj_tran.R;
 import com.renyu.nj_tran.model.StationModel;
 
@@ -52,6 +53,8 @@ public class StationMapActivity extends BaseActivity implements AMap.OnCameraCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
 
         models=getIntent().getExtras().getParcelableArrayList("values");
 

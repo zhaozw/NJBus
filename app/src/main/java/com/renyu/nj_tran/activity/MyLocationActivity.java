@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocalDayWeatherForecast;
@@ -43,6 +44,8 @@ import butterknife.InjectView;
  */
 public class MyLocationActivity extends BaseActivity implements AMapLocationListener, AMapLocalWeatherListener {
 
+    @InjectView(R.id.mylocation_nostation)
+    TextView mylocation_nostation;
     @InjectView(R.id.mylocation_srl)
     SwipeRefreshLayout mylocation_srl=null;
     @InjectView(R.id.mylocation_rv)
@@ -85,6 +88,13 @@ public class MyLocationActivity extends BaseActivity implements AMapLocationList
             mylocation_srl.setRefreshing(false);
 
             isLoading=false;
+
+            if (models.size()==0) {
+                mylocation_nostation.setVisibility(View.VISIBLE);
+            }
+            else {
+                mylocation_nostation.setVisibility(View.GONE);
+            }
         }
     };
 
