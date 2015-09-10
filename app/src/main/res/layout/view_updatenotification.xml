@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/notification_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:text="南京公交正在下载"/>
+    <ProgressBar
+        android:id="@+id/notification_progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="0"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"/>
+</LinearLayout>

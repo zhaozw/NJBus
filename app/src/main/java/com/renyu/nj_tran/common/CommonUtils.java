@@ -1,14 +1,18 @@
 package com.renyu.nj_tran.common;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.WindowManager;
+import android.widget.RemoteViews;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.renyu.nj_tran.R;
+import com.renyu.nj_tran.activity.NothingActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,6 +44,10 @@ public class CommonUtils {
     private static ExecutorService executorService= Executors.newFixedThreadPool(5);
 
     private static RequestQueue queue=null;
+
+    private static NotificationManager manager=null;
+    private static RemoteViews remoteViews=null;
+    private static Notification no=null;
 
     /**
      * 拷贝本地数据库
@@ -191,6 +201,31 @@ public class CommonUtils {
             }
             return false;
         }
+    }
+
+    public static void showNotification(Context context) {
+        if (manager==null) {
+            manager= (NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setTicker("南京公交正在下载");
+        builder.setDefaults(Notification.DEFAULT_ALL);
+        remoteViews=new RemoteViews(context.getPackageName(), R.layout.view_updatenotification);
+        builder.setContent(remoteViews);
+        builder.setAutoCancel(false);
+        no=builder.build();
+        manager.notify(1, no);
+    }
+
+    public static void updateNotification(Context context, int process, int max) {
+        remoteViews.setProgressBar(R.id.notification_progress, max, process, false);
+        remoteViews.setTextViewText(R.id.notification_text, "当前已下载"+process+"%");
+        manager.notify(1, no);
+    }
+
+    public static void cancelNotification(Context context) {
+        manager.cancel(1);
     }
 
     public static void addThread(Runnable runnable) {
