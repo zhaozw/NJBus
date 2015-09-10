@@ -29,6 +29,8 @@ import com.renyu.nj_tran.model.LineModel;
 import com.renyu.nj_tran.model.StationModel;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.InjectView;
 
@@ -155,6 +157,18 @@ public class SearchActivity extends BaseActivity {
                     search_result_lv.setVisibility(View.VISIBLE);
                     search_lv.setVisibility(View.GONE);
 
+                    boolean isOK=true;
+                    Pattern pattern=Pattern.compile("^[a-zA-Z0-9\\u4E00-\\u9fa5]+$");
+                    for (int i=0;i<s.toString().length();i++) {
+                        Matcher matcher=pattern.matcher(s.toString());
+                        if (!matcher.find()) {
+                            isOK=false;
+                            break;
+                        }
+                    }
+                    if (!isOK) {
+                        return;
+                    }
                     models_search.clear();
                     models_search.addAll(DBUtils.getSearchResult(SearchActivity.this, s.toString()));
                     adapter2.notifyDataSetChanged();
