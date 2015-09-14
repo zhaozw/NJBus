@@ -355,7 +355,7 @@ public class DBUtils {
 
     public static synchronized void removeFav(Context context, int line_id, int updown_type) {
         android.database.sqlite.SQLiteDatabase db=LocalSqliteHelper.getInstance(context).getReadableDatabase();
-        db.delete(LocalSqliteHelper.TABLE_NAME_FAV, LocalSqliteHelper.LINE_ID + "=? and" + LocalSqliteHelper.UPDOWN_TYPE + "=?", new String[]{"" + line_id, "" + updown_type});
+        db.delete(LocalSqliteHelper.TABLE_NAME_FAV, LocalSqliteHelper.LINE_ID + "=? and " + LocalSqliteHelper.UPDOWN_TYPE + "=?", new String[]{"" + line_id, "" + updown_type});
         db.close();
     }
 

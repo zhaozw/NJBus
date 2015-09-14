@@ -43,7 +43,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         SwipeBackHelper.getCurrentPage(this)
                 .setSwipeBackEnable(true)
-                .setSwipeEdgePercent(0.5f)
+                .setSwipeEdgePercent(0.1f)
                 .setSwipeSensitivity(0.5f)
                 .setClosePercent(0.5f)
                 .setSwipeRelateEnable(true).setSwipeSensitivity(1);

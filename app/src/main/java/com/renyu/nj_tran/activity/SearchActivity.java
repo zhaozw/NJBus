@@ -119,6 +119,15 @@ public class SearchActivity extends BaseActivity {
         search_lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int i, SwipeMenu swipeMenu, int i1) {
+                final int i_=i;
+                DBUtils.removeFav(SearchActivity.this, models.get(i).getLine_id(), models.get(i).getUpdown_type());
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        models.remove(models.get(i_));
+                        adapter.notifyDataSetChanged();
+                    }
+                }, 300);
                 return false;
             }
         });

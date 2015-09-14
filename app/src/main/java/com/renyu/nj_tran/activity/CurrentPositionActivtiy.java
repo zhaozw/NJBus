@@ -94,7 +94,7 @@ public class CurrentPositionActivtiy extends BaseActivity {
         @Override
         public void run() {
             currentposition_srl.setRefreshing(true);
-            GsonRequest<CurrentPositionModel> request = new GsonRequest<CurrentPositionModel>(Request.Method.POST, "http://testbk.jstv.com/rest4/BusData/getBuses/?line_code=", CurrentPositionModel.class, new Response.Listener<CurrentPositionModel>() {
+            GsonRequest<CurrentPositionModel> request = new GsonRequest<CurrentPositionModel>(Request.Method.POST, "http://bus.inj100.com/rest4/BusData/getBuses", CurrentPositionModel.class, new Response.Listener<CurrentPositionModel>() {
 
                 @Override
                 public void onResponse(final CurrentPositionModel response) {
