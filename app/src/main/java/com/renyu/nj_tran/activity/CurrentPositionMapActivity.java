@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 
+import com.amap.api.location.core.CoordinateConvert;
+import com.amap.api.location.core.GeoPoint;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdate;
 import com.amap.api.maps2d.CameraUpdateFactory;
@@ -155,7 +157,7 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
                 aMap.addPolyline(options.color(Color.BLACK)).setGeodesic(true);
                 isDrawComp=true;
                 if (getIntent().getExtras().getParcelableArrayList("busLists")!=null) {
-                    ArrayList<CurrentPositionModel.BusesEntity> busLists=getIntent().getExtras().getParcelableArrayList("busLists");
+                    ArrayList<CurrentPositionModel> busLists= (ArrayList<CurrentPositionModel>) getIntent().getExtras().getSerializable("busLists");
                     onEventMainThread(busLists);
                 }
             }
@@ -182,13 +184,14 @@ public class CurrentPositionMapActivity extends BaseActivity implements AMap.OnC
 
     }
 
-    public void onEventMainThread(ArrayList<CurrentPositionModel.BusesEntity> busesEntityList) {
+    public void onEventMainThread(ArrayList<CurrentPositionModel> busesEntityList) {
         if (isDrawComp) {
             for (int i=0;i<markers.size();i++) {
                 markers.get(i).remove();
             }
             for (int i=0;i<busesEntityList.size();i++) {
-                addBusMarker(busesEntityList.get(i).getSt_real_lat(), busesEntityList.get(i).getSt_real_lon(), "", "", 100+i);
+                GeoPoint gp=CoordinateConvert.fromGpsToAMap(busesEntityList.get(i).getGps().getLat(), busesEntityList.get(i).getGps().getLon());
+                addBusMarker((double) gp.getLatitudeE6()/10E5, (double) gp.getLongitudeE6()/10E5, "", "", 100+i);
             }
         }
     }

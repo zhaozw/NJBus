@@ -95,8 +95,8 @@ public class CurrentPositionAdapter extends BaseAdapter {
             else {
                 cpBusHolder= (CPBusHolder) convertView.getTag();
             }
-            CurrentPositionModel.BusesEntity model=((CurrentPositionModel.BusesEntity) models.get(position));
-            cpBusHolder.adapter_currentposition_line.setText("约" + model.getSt_dis()+"米");
+            CurrentPositionModel model=((CurrentPositionModel) models.get(position));
+            cpBusHolder.adapter_currentposition_line.setText("约" + model.getDis()+"米");
             convertView.setBackgroundColor(Color.WHITE);
         }
         return convertView;
@@ -107,7 +107,7 @@ public class CurrentPositionAdapter extends BaseAdapter {
         if (models.get(position) instanceof StationModel) {
             return STATION_TYPE;
         }
-        else if (models.get(position) instanceof CurrentPositionModel.BusesEntity) {
+        else if (models.get(position) instanceof CurrentPositionModel) {
             return BUS_TYPE;
         }
         return super.getItemViewType(position);

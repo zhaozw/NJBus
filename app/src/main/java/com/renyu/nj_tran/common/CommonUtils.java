@@ -210,7 +210,7 @@ public class CommonUtils {
         NotificationCompat.Builder builder=new NotificationCompat.Builder(context);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setTicker("南京公交正在下载");
-        builder.setDefaults(Notification.DEFAULT_ALL);
+        builder.setDefaults(Notification.DEFAULT_LIGHTS);
         remoteViews=new RemoteViews(context.getPackageName(), R.layout.view_updatenotification);
         builder.setContent(remoteViews);
         builder.setAutoCancel(false);

@@ -13,16 +13,24 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.renyu.nj_tran.R;
 import com.renyu.nj_tran.adapter.CurrentPositionAdapter;
 import com.renyu.nj_tran.common.CommonUtils;
 import com.renyu.nj_tran.common.DBUtils;
-import com.renyu.nj_tran.common.GsonRequest;
+import com.renyu.nj_tran.common.OKHttpHelper;
 import com.renyu.nj_tran.model.CurrentPositionModel;
+import com.renyu.nj_tran.model.JsonParse;
 import com.renyu.nj_tran.model.LineModel;
 import com.renyu.nj_tran.model.StationModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.InjectView;
@@ -45,7 +53,9 @@ public class CurrentPositionActivtiy extends BaseActivity {
     ArrayList<Object> models=null;
     ArrayList<StationModel> stationModels=null;
     ArrayList<Integer> hasPassArraylists=null;
-    ArrayList<CurrentPositionModel.BusesEntity> busLists=null;
+    ArrayList<CurrentPositionModel> busLists=null;
+
+    OKHttpHelper httpHelper=new OKHttpHelper();
 
     Handler handler=new Handler() {
         @Override
@@ -70,12 +80,12 @@ public class CurrentPositionActivtiy extends BaseActivity {
                 post(runnable);
             }
             else if (msg.what==2) {
-                busLists=msg.getData().getParcelableArrayList("value");
+                busLists= (ArrayList<CurrentPositionModel>) msg.getData().getSerializable("value");
                 EventBus.getDefault().post(busLists);
                 models.clear();
                 for (int i=0;i<stationModels.size();i++) {
                     for (int j=0;j<busLists.size();j++) {
-                        if (busLists.get(j).getSt_level()==(i+1)) {
+                        if (busLists.get(j).getLevel()==(i+1)) {
                             models.add(busLists.get(j));
                         }
                     }
@@ -94,46 +104,53 @@ public class CurrentPositionActivtiy extends BaseActivity {
         @Override
         public void run() {
             currentposition_srl.setRefreshing(true);
-            GsonRequest<CurrentPositionModel> request = new GsonRequest<CurrentPositionModel>(Request.Method.POST, "http://bus.inj100.com/rest4/BusData/getBuses", CurrentPositionModel.class, new Response.Listener<CurrentPositionModel>() {
-
+            StringRequest stringRequest=new StringRequest(Request.Method.POST, "http://bus.inj100.jstv.com/real_a", new Response.Listener<String>() {
                 @Override
-                public void onResponse(final CurrentPositionModel response) {
-                    CommonUtils.addThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ArrayList<CurrentPositionModel.BusesEntity> busesEntityList = (ArrayList<CurrentPositionModel.BusesEntity>) response.getBuses();
-//                            for (int i = 0; i < busesEntityList.size(); i++) {
-//                                CurrentPositionModel.BusesEntity entity=busesEntityList.get(i);
-//                                System.out.println(DBUtils.getStationName(entity.getSt_id(), CurrentPositionActivtiy.this) + " "
-//                                        + entity.getOffline() + " " + entity.getSpeed() + " " + entity.getSt_dis() + " " + entity.getSt_level() + " "
-//                                        + entity.getSt_real_lat() + " " + entity.getSt_real_lon() + " " + entity.getUpdated());
-//                            }
-                            Message m=new Message();
-                            Bundle bundle=new Bundle();
-                            bundle.putParcelableArrayList("value", busesEntityList);
-                            m.setData(bundle);
-                            m.what=2;
-                            handler.sendMessage(m);
+                public void onResponse(String response) {
+                    ArrayList<CurrentPositionModel> models=new ArrayList<>();
+                    try {
+                        JSONArray array=new JSONArray(response);
+                        for (int i=0;i<array.length();i++) {
+                            CurrentPositionModel model=new CurrentPositionModel();
+                            CurrentPositionModel.GpsEntity entity=new CurrentPositionModel.GpsEntity();
+                            JSONObject object=array.getJSONObject(i);
+                            model.setDis(object.getDouble("Dis"));
+                            model.setId(object.getString("Id"));
+                            model.setLevel(object.getInt("Level"));
+                            model.setOff(object.getInt("Off"));
+                            model.setSpd(object.getString("Spd"));
+                            model.setT(object.getInt("T"));
+                            entity.setLat(object.getJSONObject("Gps").getDouble("lat"));
+                            entity.setLon(object.getJSONObject("Gps").getDouble("lon"));
+                            model.setGps(entity);
+                            models.add(model);
                         }
-                    });
-
+                        Message m=new Message();
+                        Bundle bundle=new Bundle();
+                        bundle.putSerializable("value", models);
+                        m.setData(bundle);
+                        m.what=2;
+                        handler.sendMessage(m);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        currentposition_srl.setRefreshing(false);
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     currentposition_srl.setRefreshing(false);
-                    System.out.println(error.getMessage());
                 }
             }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> map=CommonUtils.getKeyAndData(model.getLine_id(), model.getLine_code(), model.getUpdown_type());
+                    Map<String, String> map = CommonUtils.getKeyAndData(model.getLine_id(), model.getLine_code(), model.getUpdown_type());
                     map.put("client", "android");
                     return map;
                 }
             };
-            request.setTag("current_position");
-            CommonUtils.getVolleyInstance(CurrentPositionActivtiy.this).add(request);
+            stringRequest.setTag("current_position");
+            CommonUtils.getVolleyInstance(CurrentPositionActivtiy.this).add(stringRequest);
         }
     };
 
@@ -202,7 +219,7 @@ public class CurrentPositionActivtiy extends BaseActivity {
             bundle.putString("line_name", getIntent().getExtras().getString("line_name"));
             bundle.putParcelable("value", getIntent().getExtras().getParcelable("value"));
             if (busLists!=null&&busLists.size()>0) {
-                bundle.putParcelableArrayList("busLists", busLists);
+                bundle.putSerializable("busLists", busLists);
             }
             intent.putExtras(bundle);
             startActivity(intent);
